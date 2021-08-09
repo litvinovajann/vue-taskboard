@@ -13,7 +13,6 @@ import {defineComponent, createApp} from "vue";
 export default {
     name:"Task",
     props: ["task"],
-
     methods: {
          showDetailInfo: () => {
             let taskDetailComponent = defineComponent({
@@ -22,7 +21,8 @@ export default {
             const div = document.createElement("div");
             document.getElementById("task-detail").appendChild(div);
             createApp(taskDetailComponent).mount(div);
-        }           
+        },
+        
     },
 }
 </script>
