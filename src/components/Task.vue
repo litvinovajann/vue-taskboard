@@ -18,7 +18,7 @@ export default {
             let taskDetailComponent = defineComponent({
                 extends: TaskDetail
             });
-            const div = document.createElement("div");
+            const div = `document.createElement("div");
             document.getElementById("task-detail").appendChild(div);
             createApp(taskDetailComponent).mount(div);
         },
