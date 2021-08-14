@@ -1,29 +1,36 @@
 <template>
-    <div class="task">
-        <div v-on:click="showDetailInfo()">
+    <div @click="showPopup" class="task">
+        <div>
             {{task.name}}
         </div>
+    </div>
+    <div>
+        <TaskDetail v-show="modalShown"  v-bind:task="task" v-bind:key="task.type" @close="closePopup">
+        </TaskDetail>
     </div>
 </template>
 
 <script>
 import TaskDetail from "./TaskDetail.vue"
-import {defineComponent, createApp} from "vue";
-
 export default {
     name:"Task",
     props: ["task"],
-    methods: {
-         showDetailInfo: () => {
-            let taskDetailComponent = defineComponent({
-                extends: TaskDetail
-            });
-            const div = `document.createElement("div");
-            document.getElementById("task-detail").appendChild(div);
-            createApp(taskDetailComponent).mount(div);
-        },
-        
+    data: function() {
+        return {
+            modalShown: false,
+        }
     },
+    methods: {        
+        showPopup: function() {
+            this.modalShown = true;
+        },
+        closePopup: function() {
+            this.modalShown = false;
+        }
+    },
+    components: {
+        TaskDetail
+    }
 }
 </script>
 

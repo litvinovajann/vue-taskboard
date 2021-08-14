@@ -6,7 +6,8 @@
     </taskCategory>
     </div>
     <div class="add-new-cat-container">
-          <input v-model = "newColumnName" type="text"/>
+          <label for="columName">put your column name here </label>
+          <input v-model = "newColumnName" name="columnName" type="text"/>
           <button class="button-add-column" v-on:click="addCategory">Add Column</button>
     </div>
   <div id="task-detail"></div>
@@ -21,7 +22,17 @@ export default {
   components: {
     taskCategory
   },
- data: function() {return {
+  data: function() {return {
+        taskTypes: [{
+          name: "new functionality",
+          code: "feat"
+        },{
+          name: "defect",
+          code: "defect"
+        },{
+          name: "tech duty",
+          code: "tech"
+        },],
         categories: [
             { name: "backlog", id: "backlog" },
             { name: "progress", id: "progress" },
@@ -29,24 +40,51 @@ export default {
         ],
         tasks: [{
             name: "task1",
-            type: "backlog"
+            type: "backlog",
+            author: "Somebody",
+            createDate: new Date(),
+            performer: "Somebody 2",
+            taskType: "feat",
+            points: 2,
+            description: "description of the first task"
+
         },
         {
             name: "task2",
-            type: "done"
+            type: "done",
+            author: "Somebody3",
+            createDate: new Date(),
+            performer: "Somebody 4",
+            taskType: "tech",
+            points: 1,
+            description: "description of the second task"
         }],
         categoryCounter: 0,
         newColumnName: '',
         taskCounter:0,
         newTaskName: ''
     }},
+  provide: function() {
+    return {tasks: this.tasks, validator: this.validator}
+    },
     methods: {
+        validator: function(input) {
+          if (input.length > 0) {
+            return true;
+          }
+          return false;
+        },
         addCategory: function() {
             let inputName = this.newColumnName;
+            if (this.validator(inputName)){
             this.categories.push({name:inputName, id:inputName});
             this.newColumnName = '';
             this.categoryCounter++;
+            } else {
+              alert('data incorrect')
+            }
         },
+
     }
 }
 </script>

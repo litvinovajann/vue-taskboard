@@ -3,12 +3,12 @@
             <div class='cat-header'>{{category.name}}</div>
             <div class="tasks">
                 <Task v-bind:key="task.type"
-                 v-bind:task = "task"
-                 v-for="task in filterTasks(tasks, category.id)">
+                 v-for="task in filterTasks(tasks, category.id)"   
+                 v-bind:task = "task">
                     {{task.name}}
                  </Task>
             </div>
-            <input v-model="newTaskName" type="text"/>
+            <input class="input-add-task" v-model="newTaskName" type="text"/>
             <button class="button-add-column" v-on:click="addTask(category.name)">Add task</button>
 </div>
 </template>
@@ -17,7 +17,8 @@
 import Task from './Task.vue'
 export default {
     name:"TaskCategory",
-    props: ["category", "tasks"],
+    props: ["category"],
+    inject: ["tasks", "validator"],
     data: function() {
         return {
             newTaskName: ''
@@ -29,12 +30,14 @@ export default {
                 return task.type == neededType;
             })
         },
-         addTask : function(type) {
+        addTask : function(type) {
             let inputName = this.newTaskName;
+            if(this.validator(inputName)) {
             this.tasks.push({name:inputName, type:type})
             this.newTaskName = '';
             this.taskCounter++;
-           
+            }
+            else alert('empty task')
         }
     },
     components: {Task}
@@ -55,4 +58,10 @@ export default {
 .tasks{
     height: 300px;
 }
+
+.input-add-task {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
 </style>

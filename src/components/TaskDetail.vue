@@ -1,8 +1,11 @@
 <template>
-    <div class="popup" id="popup" v-bind:task="task">
-        popup
-        {{task}}
-        <div class="closeButton" v-on:click="hideTask">
+    <div class="popup" id="popup">
+        <label for="taskName"> Task Name</label>
+        <input type="text" name= "taskName"  v:value="task.name" >
+        <br>
+        <br>
+        {{task.description}}
+        <div class="closeButton" @click="close">
         х
         </div>
     </div>
@@ -11,12 +14,13 @@
 export default {
    name:"TaskDetail",
    props: ["task"],
+   inject: ["tasks"],
    methods: {
-        hideTask: () => {
-            const popup = document.getElementById("popup");
-            popup.style.display="none"
-        } 
-   },
+       close() {
+           this.$emit('close');
+           return true;
+       }
+   }
 }
 </script>
 <style>
