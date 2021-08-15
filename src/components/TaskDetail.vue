@@ -1,13 +1,22 @@
 <template>
     <div class="popup" id="popup">
-        <label for="taskName"> Task Name</label>
-        <input type="text" name= "taskName"  v:value="task.name" >
-        <br>
-        <br>
-        {{task.description}}
+       <h1>{{task.name}}</h1>
+        <div>{{task.author}}</div>
+        <div>{{task.difficulty}}</div>
+        <div>{{task.description}} </div>
+        <div>{{task.deadline}}</div> 
+        <button @click="showTaskEditing">Edit Task</button>
+        <div v-show="editTaskShown" class="editTask">
+            <input type="text" v-model="TaskData.name">
+            <input type="text" v-model="TaskData.author">
+            <textarea type="text" v-model="TaskData.description"/>
+            <input type="text" v-model="TaskData.deadline">
+            <button @click ="editTask">Update</button>
+        </div>
         <div class="closeButton" @click="close">
         х
         </div>
+        
     </div>
 </template>
 <script>
@@ -15,10 +24,27 @@ export default {
    name:"TaskDetail",
    props: ["task"],
    inject: ["tasks"],
+   computed: {
+       TaskData: function() {
+           return this.tasks.find(el => el.id === this.task.id);
+       }
+   },
+   data: function() {
+       return {
+           editTaskShown: false,
+       }
+   },
    methods: {
        close() {
            this.$emit('close');
            return true;
+       },
+       showTaskEditing() {
+           this.editTaskShown = true;
+       },
+       editTask() {
+            this.editTaskShown = false;
+            return true;
        }
    }
 }

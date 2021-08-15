@@ -8,6 +8,8 @@
     <div class="add-new-cat-container">
           <label for="columName">put your column name here </label>
           <input v-model = "newColumnName" name="columnName" type="text"/>
+          <label for="columnType">enter type of the new column</label>
+          <input v-model = "columnType" name="columnType" type="text"/>
           <button class="button-add-column" v-on:click="addCategory">Add Column</button>
     </div>
   <div id="task-detail"></div>
@@ -39,9 +41,12 @@ export default {
             { name: "done", id: "done" },
         ],
         tasks: [{
+            id: 1,
             name: "task1",
             type: "backlog",
             author: "Somebody",
+            difficulty: "easy",
+            deadline: "12.09.2021",
             createDate: new Date(),
             performer: "Somebody 2",
             taskType: "feat",
@@ -50,11 +55,14 @@ export default {
 
         },
         {
+            id:2,
             name: "task2",
             type: "done",
             author: "Somebody3",
             createDate: new Date(),
+            deadline: "12.09.2021",
             performer: "Somebody 4",
+            difficulty: "semi-easy",
             taskType: "tech",
             points: 1,
             description: "description of the second task"
@@ -76,8 +84,9 @@ export default {
         },
         addCategory: function() {
             let inputName = this.newColumnName;
-            if (this.validator(inputName)){
-            this.categories.push({name:inputName, id:inputName});
+            let inputType = this.columnType;
+            if (this.validator(inputName) && this.validator(inputType)){
+            this.categories.push({name:inputName, id:inputType});
             this.newColumnName = '';
             this.categoryCounter++;
             } else {

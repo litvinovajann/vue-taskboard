@@ -1,7 +1,8 @@
 <template>
     <div @click="showPopup" class="task">
         <div>
-            {{task.name}}
+           <h2>Name: {{task.name}} </h2>
+           <p>Author: {{task.author}}</p>
         </div>
     </div>
     <div>
