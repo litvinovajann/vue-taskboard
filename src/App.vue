@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="flex-container category-container">
-    <taskCategory v-bind:key="category.id" v-bind:tasks="tasks" v-bind:category="category"
+    <taskCategory v-bind:taskTypes="taskTypes" v-bind:key="category.id" v-bind:tasks="tasks" v-bind:category="category"
      v-for="category in categories">
     </taskCategory>
     </div>
@@ -111,7 +111,7 @@ export default {
     display: flex;
 }
 .category-container{
-  height: 400px;
+  min-height: 400px;
   overflow: auto;
   border: 1px solid #e6e6e6;
 }
