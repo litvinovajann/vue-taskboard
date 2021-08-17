@@ -8,7 +8,7 @@
     <div class="add-new-cat-container">
           <label for="columName">put your column name here </label>
           <input v-model = "newColumnName" name="columnName" type="text"/>
-          <label for="columnType">enter type of the new column</label>
+          <label for="columnType"> enter type of the new column </label>
           <input v-model = "columnType" name="columnType" type="text"/>
           <button class="button-add-column" v-on:click="addCategory">Add Column</button>
     </div>
@@ -111,9 +111,11 @@ export default {
     display: flex;
 }
 .category-container{
-  min-height: 400px;
-  overflow: auto;
-  border: 1px solid #e6e6e6;
+    min-height: 400px;
+    align-items: center;
+    overflow: auto;
+    border: 1px solid #e6e6e6;
+    justify-content: center;
 }
 .add-new-cat-container {
   margin:4%;
