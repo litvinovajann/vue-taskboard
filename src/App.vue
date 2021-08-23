@@ -2,7 +2,8 @@
   <div id="app">
     <div class="flex-container category-container">
     <taskCategory v-bind:taskTypes="taskTypes" v-bind:key="category.id" v-bind:tasks="tasks" v-bind:category="category"
-     v-for="category in categories">
+     v-for="category in categories"
+       @drop="onDrop($event, category.id)" @dragover.prevent @dragenter.prevent>
     </taskCategory>
     </div>
     <div class="add-new-cat-container">
@@ -54,6 +55,19 @@ export default {
             description: "description of the first task"
 
         },
+         {
+            id:3,
+            name: "task3",
+            type: "done",
+            author: "Somebody4",
+            createDate: new Date(),
+            deadline: "12.09.2021",
+            performer: "Somebody 5",
+            difficulty: "semi-easy",
+            taskType: "tech",
+            points: 1,
+            description: "description of the third task"
+        },
         {
             id:2,
             name: "task2",
@@ -67,6 +81,7 @@ export default {
             points: 1,
             description: "description of the second task"
         }],
+        
         categoryCounter: 0,
         newColumnName: '',
         taskCounter:0,
@@ -93,6 +108,20 @@ export default {
               alert('data incorrect')
             }
         },
+        onDrop(event, type) {
+            const taskId = parseInt(event.dataTransfer.getData('taskId'))
+            this.tasks = this.tasks.map(oneTask => {
+              if (oneTask.id == taskId)
+                oneTask.type = type
+              return oneTask
+            })
+            return {
+            tasks: this.tasks,
+            categories: this.categories,
+            onDragStart: this.onDragStart,
+            onDrop: this.onDrop,
+          }
+    },
 
     }
 }

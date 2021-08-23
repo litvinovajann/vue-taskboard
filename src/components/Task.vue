@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @dragstart="onDragStart($event, task)" draggable="true">
     <div   @click="showPopup" class="task">
         <div>
            <h2>{{task.name}} </h2>
@@ -30,7 +30,12 @@ export default {
         },
         closePopup: function() {
             this.modalShown = false;
-        }
+        },
+        onDragStart(event, task) {
+            event.dataTransfer.dropEffect = 'move';
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('taskId', task.id.toString());
+        },
     },
     components: {
         TaskDetail,

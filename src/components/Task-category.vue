@@ -2,15 +2,14 @@
  <div class='task-category'>
             <div class='cat-header'>{{category.name}}</div>
             <div class="tasks">
-                <draggable v-model="tasks"  :move="handleMove" group='task' @end="handleDragEnd">
-                <transition-group>
                 <Task v-bind:key="task.type"
                  v-for="task in filterTasks(tasks, category.id)"   
-                 v-bind:task = "task">
+                 v-bind:task = "task"
+                 @dragstart="onDragStart($event, task)" 
+                 draggable="true"
+                 >
                     {{task.name}}
                  </Task>
-                </transition-group>
-                </draggable>
             </div>
             <div class="newTask">
                 <select v-model="taskType">
@@ -24,7 +23,6 @@
 
 <script>
 import Task from './Task.vue'
-import { VueDraggableNext } from 'vue-draggable-next'
 export default {
     name:"TaskCategory",
     props: ["category","taskTypes"],
@@ -44,6 +42,11 @@ export default {
         handleDragEnd() {
             console.log( 'end');
           },
+        onDragStart(event, task) {
+            event.dataTransfer.dropEffect = 'move'
+            event.dataTransfer.effectAllowed = 'move'
+            event.dataTransfer.setData('taskId', task.id.toString())
+        },
         handleMove(e) {
              console.log( e.draggedContext)
              const { index, futureIndex } = e.draggedContext;
@@ -63,7 +66,7 @@ export default {
             else alert('empty task')
         }
     },
-    components: {Task, draggable: VueDraggableNext}
+    components: {Task}
 }
 </script>
 
